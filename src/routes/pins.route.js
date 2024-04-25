@@ -1648,7 +1648,8 @@ router
     }
     ]
 
-    await Pins.insert(data)
+    const re = await Pins.insert(data)
+    return res.json({status: true, data: re})
   })
 
 module.exports = router ;
