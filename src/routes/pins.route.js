@@ -1648,7 +1648,11 @@ router
     }
     ]
 
-    const re = await Pins.insert(data)
+    const re = []
+    for( const each in data) {
+      const v = await Pins.create(each);
+      re.push(v);
+    }
     return res.json({status: true, data: re})
   })
 
