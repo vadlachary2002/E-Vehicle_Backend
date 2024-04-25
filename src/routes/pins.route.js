@@ -1649,7 +1649,7 @@ router
     ]
 
     const re = []
-    for( const each in data) {
+    for( const each of data) {
       const v = await Pins.create(each);
       re.push(v);
     }
