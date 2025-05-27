@@ -78,7 +78,7 @@ function generateCity(name, numSubcities) {
   }
   return {
     city: name,
-    available: getRandomInt(20, 60),
+    available: getRandomInt(10, 20),
     subcities,
   };
 }
