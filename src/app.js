@@ -13,8 +13,8 @@ const config = require('./config/config');
 // parse urlencoded request body
 app.use(express.json());
 const corsOptions ={
-  origin:[config.frontendUrl,"http://localhost:3001","http://localhost:8080"], 
-  credentials:true,            
+  origin:[config.frontendUrl,"http://localhost:3001","http://localhost:3000"],
+  credentials:true,
   optionSuccessStatus:200,
   allowedHeaders: ['Content-Type','Authorization','x-csrf-token'],
 }
