@@ -7,19 +7,21 @@ const register = catchAsync (async (req,res)=>{
   const { code, info } = await userService.register(req.body);
   res.status(code).json(info);
 })
-const login = catchAsync (async(req,res)=>{
+const login = catchAsync(async (req, res) => {
   const { code, info } = await userService.login(req.body);
   const options = {
-    expires: new Date(moment (Date.now()).add(config.tokenExpiryDays,'days')),
-    httpOnly: false,
-    secure: false,
-  }
-  const { email, token } =  info;
+    expires: new Date(Date.now() + config.tokenExpiryDays * 24 * 60 * 60 * 1000), // simplified expiration
+    httpOnly: true,   // better security
+    secure: true,     // must be true for HTTPS
+    sameSite: 'Lax' // or 'Lax' depending on your needs
+  };
+  const { email, token } = info;
   res
-    .cookie('email',email,{httpOnly:false})
-    .cookie('jwtoken',token,{httpOnly:false})
-    .status(code).json(info);
-})
+      .cookie('email', email, { ...options, httpOnly: false }) // maybe you want email accessible from client
+      .cookie('jwtoken', token, options)
+      .status(code)
+      .json(info);
+});
 
 const logout = catchAsync(async(req,res)=>{
   const { jwtoken, email } = req.cookies;
