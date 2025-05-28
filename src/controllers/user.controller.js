@@ -10,7 +10,7 @@ const login = catchAsync(async (req, res) => {
   const { code, info } = await userService.login(req.body);
   const options = {
     expires: new Date(Date.now() + config.tokenExpiryDays * 24 * 60 * 60 * 1000),
-    httpOnly: true,
+    httpOnly: false,
     secure: true,
     sameSite: 'Lax'
   };
