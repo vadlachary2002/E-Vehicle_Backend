@@ -1,5 +1,4 @@
 const config = require("../config/config");
-const moment = require("moment");
 const { userService } = require("../services");
 const catchAsync = require("../utils/catchAsync");
 
@@ -10,14 +9,14 @@ const register = catchAsync (async (req,res)=>{
 const login = catchAsync(async (req, res) => {
   const { code, info } = await userService.login(req.body);
   const options = {
-    expires: new Date(Date.now() + config.tokenExpiryDays * 24 * 60 * 60 * 1000), // simplified expiration
-    httpOnly: true,   // better security
-    secure: true,     // must be true for HTTPS
-    sameSite: 'Lax' // or 'Lax' depending on your needs
+    expires: new Date(Date.now() + config.tokenExpiryDays * 24 * 60 * 60 * 1000),
+    httpOnly: true,
+    secure: true,
+    sameSite: 'Lax'
   };
   const { email, token } = info;
   res
-      .cookie('email', email, { ...options, httpOnly: false }) // maybe you want email accessible from client
+      .cookie('email', email, { ...options })
       .cookie('jwtoken', token, options)
       .status(code)
       .json(info);
