@@ -12,11 +12,11 @@ const login = catchAsync(async (req, res) => {
     expires: new Date(Date.now() + config.tokenExpiryDays * 24 * 60 * 60 * 1000),
     httpOnly: false,
     secure: true,
-    sameSite: 'Lax'
+    sameSite: 'None'
   };
   const { email, token } = info;
   res
-      .cookie('email', email, { ...options })
+      .cookie('email', email, { ...options, httpOnly: false })
       .cookie('jwtoken', token, options)
       .status(code)
       .json(info);
